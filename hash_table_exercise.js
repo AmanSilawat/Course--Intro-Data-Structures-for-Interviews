@@ -4,6 +4,7 @@ class HashTable {
     constructor(val) {
         this._storage = [];
         this._tableSize = val;
+        this.inputSize = 0; //look into remove method
     }
     /*
      * Inserts a new key-value pair
@@ -27,7 +28,11 @@ class HashTable {
      * @param {string} key - the key associated with the value
      * @return {*} value - the deleted value
      */
-    remove() {}
+    remove() {
+        // when you insert, if the size is greater than 50% of the lenght of your hash table storage.
+        // so if your table size 25, inputSize is 0 and you implement every time.
+        // if this is 50% more of your table size than double your table size.
+    }
     /*
      * Returns the value associated with a key
      * @param {string} key - the key to search for
