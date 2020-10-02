@@ -3,7 +3,7 @@
 class HashTable {
     constructor(val) {
         this._storage = [];
-        this.tableSize = val;
+        this._tableSize = val;
     }
     /*
      * Inserts a new key-value pair
@@ -11,13 +11,14 @@ class HashTable {
      * @param {*} value - the value to insert
      */
     insert(key, value) {
-        const index = this._hash(key, this.tableSize);
+        const index = this._hash(key, this._tableSize);
 
         if (!this._storage[index]) {
             this._storage[index] = [];
         }
         //this work like this  [0,0,0,[],0]
 
+        //TODO: loop through array and find if key was alredy inserted
         this._storage[index].push([key, value]);
         //this work like this  [0,0,0,['a', 1],['b', 2],0]
     }
@@ -32,7 +33,20 @@ class HashTable {
      * @param {string} key - the key to search for
      * @return {*} - the value associated with the key
      */
-    retrieve() {}
+    // HashTable { _storage: [0,0,0,0,['a', 1], ['b', 2]],0,0,0]}
+    retrieve(key) {
+        const index = this._hash(key, this._tableSize);
+        const arrayAtIndex = this._storage[index];
+        
+        if (arrayAtIndex) {
+            for (let i = 0; i < arrayAtIndex.length; i++) {
+                const keyVlaueArray = arrayAtIndex[i];
+                if (keyVlaueArray[0] === key) {
+                    return keyVlaueArray[1];
+                }
+            }
+        }
+    }
     /*
      * Hashes string value into an integer that can be mapped to an array index
      * @param {string} str - the string to be hashed
@@ -51,8 +65,10 @@ const myHT = new HashTable(25);
 console.log(myHT);
 myHT.insert('a', 1);
 myHT.insert('b', 2);
-
 console.log(myHT);
+
+//retrive data
+console.log(myHT.retrieve('a'));
 
 //look like this
 // HashTable { _storage: [0,0,0,0,['a', 1], ['b', 2]],0,0,0]}
